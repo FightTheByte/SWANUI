@@ -26,6 +26,16 @@ end_progress_dots() {
     { printf '\n'; kill $! && wait $!; } 2>/dev/null
 }
 
+contains_substring() {
+    string="$1"
+    substring="$2"
+
+    case "$string" in
+        *"$substring"*) return 1 ;;
+        *) return 0 ;;
+    esac
+}
+
 http_download() {
     url="$1"
     output="$2"
@@ -65,10 +75,16 @@ command -v uname >/dev/null 2>&1 ||
 
 platform="$(uname)"
 # Handle when not MacOS or Linux -- no binary available for other systems
-[ $platform != "Linux" ] && [ $platform != "MacOS" ] &&
+[ $platform != "Linux" ] && [ $platform != "Darwin" ] &&
     echo "SWAN binaries are only available for Windows, MacOS and Linux." && exit 1
 
-swan_bin_url=${swan_bin_url//PLATFORM/$platform} # Substitute platform into URL
+# Correct platform for MacOS binaries
+if [ $platform = "Darwin" ]; then
+    url_platform="macOS"
+    [ $(uname -m) = "arm64" ] && url_platform="$url_platform-Silicon"
+fi
+
+swan_bin_url=${swan_bin_url//PLATFORM/$url_platform} # Substitute platform into URL
 swan_bin_url=${swan_bin_url//VERSION/$version} # Substitute version into URL
 
 # Ensure output directory exists
@@ -97,17 +113,23 @@ rm $swan_bin_output_dir/$swan_bin_output_gz
 # Copy binary to ~/.local/bin
 echo "Copying binaries to ~/.local/bin"
 [ -d ~/.local/bin ] || mkdir -p ~/.local/bin
-cp $swan_bin_output_dir/SWAN-$version-$platform/bin/* ~/.local/bin
+cp $swan_bin_output_dir/SWAN-$version-$url_platform/bin/* ~/.local/bin
 
 # Add to PATH if needed
-if [ $(expr match $PATH ~/.ocal/bin) -eq 0 ]; then
+if contains_substring $PATH ~/.local/bin; then
     echo "Adding ~/.local/bin to PATH in profile"
     [ -f ~/.profile ] && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.profile &&
         echo "Updated PATH in ~/.profile"
-    [ -f ~/.bash_profile ] && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.bash_profile &&
+    contains_substring $SHELL "zsh" && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.bash_profile &&
         echo "Updated PATH in ~/.bash_profile"
-    [ -f ~/.zprofile ] && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.zprofile &&
+    contains_substring $SHELL "bash" && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.zprofile &&
         echo "Updated PATH in ~/.zprofile"
+
+    if [ ! -f ~/.profile ] && ! contains_substring $SHELL "bash" && ! contains_substring $SHELL "zsh"; then
+        echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.profile &&
+            echo "Updated PATH in ~/.profile"
+    fi
+    echo "Make sure to source any changes files. For example: 'source ~/.profile'"
 fi
 
 # Possible libimf section here
@@ -115,4 +137,3 @@ fi
 # Cleanup
 echo "Cleaning up"
 rm -r $swan_bin_output_dir
-
