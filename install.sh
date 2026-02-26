@@ -5,6 +5,8 @@ swan_bin_output_gz="swan.tar.gz"
 swan_bin_url="https://swanmodel.sourceforge.io/download/zip/SWAN-VERSION-PLATFORM.tar.gz"
 version="41.51"
 
+command -v swanrun >/dev/null 2>&1 && echo "SWAN is already installed. Exiting..." && exit 0
+
 # Ensure uname installed -- seems to be best way to check OS
 command -v uname >/dev/null 2>&1 ||
     echo "Could not determine platform. 'uname' is not available." || exit 1
