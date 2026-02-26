@@ -1,9 +1,24 @@
 #!/bin/sh
 
-swan_bin_output_dir=${SWAN_DIR:-/tmp/swan}
+swan_bin_output_dir="/tmp/swan"
 swan_bin_output_gz="swan.tar.gz"
 swan_bin_url="https://swanmodel.sourceforge.io/download/zip/SWAN-VERSION-PLATFORM.tar.gz"
 version="41.51"
+
+# Ensure uname installed -- seems to be best way to check OS
+command -v uname >/dev/null 2>&1 ||
+    echo "Could not determine platform. 'uname' is not available." || exit 1
+
+platform=$(uname)
+arch=$(uname -m)
+
+# Handle when not MacOS or Linux -- no binary available for other systems
+[ $platform != "Linux" ] && [ $platform != "Darwin" ] &&
+    echo "SWAN binaries are only available for Windows, MacOS and Linux." && exit 1
+
+# Ensure tar installed -- required to extract archives
+command -v tar >/dev/null 2>&1 ||
+    echo "'tar' command is not available to extract archive." || exit 1
 
 # Progression dots functions
 progress_dots() {
@@ -69,22 +84,13 @@ http_download() {
 }
 
 # Configure Download URL
-# Ensure uname installed -- seems to be best way to check OS
-command -v uname >/dev/null 2>&1 ||
-    echo "Could not determine platform. 'uname' is not available." || exit 1
-
-platform="$(uname)"
-# Handle when not MacOS or Linux -- no binary available for other systems
-[ $platform != "Linux" ] && [ $platform != "Darwin" ] &&
-    echo "SWAN binaries are only available for Windows, MacOS and Linux." && exit 1
-
-# Correct platform for MacOS binaries
-if [ $platform = "Darwin" ]; then
-    url_platform="macOS"
-    [ $(uname -m) = "arm64" ] && url_platform="$url_platform-Silicon"
+if [ $platform = "Linux" ]; then
+    swan_bin_url=${swan_bin_url//PLATFORM/Linux}
+elif [ $platform = "Darwin" ] && [ $arch = "arm64" ]; then
+    swan_bin_url=${swan_bin_url//PLATFORM/macOS\-Silicon}
+elif [ $platform = "Darwin"]; then
+    swan_bin_url=${swan_bin_url//PLATFORM/macOS}
 fi
-
-swan_bin_url=${swan_bin_url//PLATFORM/$url_platform} # Substitute platform into URL
 swan_bin_url=${swan_bin_url//VERSION/$version} # Substitute version into URL
 
 # Ensure output directory exists
@@ -99,21 +105,16 @@ else
 fi
 
 # Extract SWAN archive
-command -v tar >/dev/null 2>&1 ||
-    echo "'tar' command is not available to extract archive." || exit 1
 printf 'Extracting archive to %s' "$swan_bin_output_dir"
 progress_dots
 tar -zxf $swan_bin_output_dir/$swan_bin_output_gz -C $swan_bin_output_dir
 end_progress_dots
 echo "Extraction Complete."
 
-# Remove archive
-rm $swan_bin_output_dir/$swan_bin_output_gz
-
 # Copy binary to ~/.local/bin
 echo "Copying binaries to ~/.local/bin"
 [ -d ~/.local/bin ] || mkdir -p ~/.local/bin
-cp $swan_bin_output_dir/SWAN-$version-$url_platform/bin/* ~/.local/bin
+cp $swan_bin_output_dir/SWAN-$version-*/bin/* ~/.local/bin
 
 # Add to PATH if needed
 if contains_substring $PATH ~/.local/bin; then
