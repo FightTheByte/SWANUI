@@ -8,12 +8,12 @@ public class CustomEventUtitlityTest {
 
     @Test
     void returnsWriteToFileEventTest(){
-        assertTrue(CustomEventUtitlity.getWriteToFileEvent() instanceof WriteToFileEvent, "Didn't return WriteToFileEvent Object");
+        assertTrue(CustomEventUtitlity.getWriteToFileEvent("SET 45 23.4") instanceof WriteToFileEvent, "Didn't return WriteToFileEvent Object");
     }
 
     @Test
     void returnsFileResultEventTest(){
-        assertTrue(CustomEventUtitlity.getFileResultEvent() instanceof FileResultEvent, "Didn't return FileResultEvent Object");
+        assertTrue(CustomEventUtitlity.getFileResultEvent("failed") instanceof FileResultEvent, "Didn't return FileResultEvent Object");
     }
 
     @Test
@@ -33,6 +33,6 @@ public class CustomEventUtitlityTest {
 
     @Test
     void returnsReturnSwanResultEventTest(){
-        assertTrue(CustomEventUtitlity.getReturnSwanResultEvent() instanceof ReturnSwanResultEvent, "Didn't return ReturnSwanResultEvent Object");
+        assertTrue(CustomEventUtitlity.getReturnSwanResultEvent("Errors") instanceof ReturnSwanResultEvent, "Didn't return ReturnSwanResultEvent Object");
     }
 }
