@@ -1,4 +1,4 @@
-package org.cob.cob;
+package org.example.cob;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
