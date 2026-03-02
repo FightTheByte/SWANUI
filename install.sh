@@ -5,7 +5,17 @@ swan_bin_output_gz="swan.tar.gz"
 swan_bin_url="https://swanmodel.sourceforge.io/download/zip/SWAN-VERSION-PLATFORM.tar.gz"
 version="41.51"
 
-command -v swanrun >/dev/null 2>&1 && echo "SWAN is already installed. Exiting..." && exit 0
+run_cob() { # TODO
+    echo "Future versions of this script will automatically launch COB. Exiting."
+    exit 0
+}
+
+# If SWAN binary detected, skip install and run COB
+if command -v swanrun >/dev/null 2>&1; then
+    echo "SWAN detected. Starting COB."
+    run_cob
+    exit 0
+fi
 
 # Ensure uname installed -- seems to be best way to check OS
 command -v uname >/dev/null 2>&1 ||
@@ -122,21 +132,21 @@ cp $swan_bin_output_dir/SWAN-$version-*/bin/* ~/.local/bin
 if contains_substring $PATH ~/.local/bin; then
     echo "Adding ~/.local/bin to PATH in profile"
     [ -f ~/.profile ] && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.profile &&
-        echo "Updated PATH in ~/.profile"
+        echo "Updated PATH in ~/.profile" && . $HOME/.profile
     contains_substring $SHELL "zsh" && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.bash_profile &&
-        echo "Updated PATH in ~/.bash_profile"
+        echo "Updated PATH in ~/.bash_profile" && . $HOME/.bash_profile
     contains_substring $SHELL "bash" && echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.zprofile &&
-        echo "Updated PATH in ~/.zprofile"
+        echo "Updated PATH in ~/.zprofile" && . $HOME/.zprofile
 
     if [ ! -f ~/.profile ] && ! contains_substring $SHELL "bash" && ! contains_substring $SHELL "zsh"; then
         echo "export PATH=$PATH:$HOME/.local/bin" >> $HOME/.profile &&
             echo "Updated PATH in ~/.profile"
     fi
-    echo "Make sure to source any changes files. For example: 'source ~/.profile'"
+    echo "Make sure to source any changed files. For example: '. ~/.profile'"
 fi
-
-# Possible libimf section here
 
 # Cleanup
 echo "Cleaning up"
 rm -r $swan_bin_output_dir
+
+run_cob
