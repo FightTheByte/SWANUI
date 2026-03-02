@@ -1,4 +1,4 @@
-package org.example.customevents;
+package customevents;
 
 public class WriteToFileEvent {
 
