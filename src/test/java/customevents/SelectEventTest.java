@@ -1,6 +1,7 @@
 package customevents;
 
-import org.junit.jupiter.api.BeforeAll;
+import org.example.customevents.SelectEvent;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -9,7 +10,7 @@ public class SelectEventTest{
 
     SelectEvent selectEvent;
 
-    @BeforeAll
+    @BeforeEach
     public void instantiate(){
         selectEvent = new SelectEvent();
     }
