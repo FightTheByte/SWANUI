@@ -2,8 +2,8 @@ package customevents;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReturnSwanResultEventTest {
 
@@ -16,6 +16,6 @@ public class ReturnSwanResultEventTest {
 
     @Test
     void returnSwanResultEventTest(){
-        assertTrue("result", returnSwanResultEvent.returnSwanResult(), "Did not return expected String result");
+        assertEquals("result", returnSwanResultEvent.returnSwanResult(), "Did not return expected String result");
     }
 }

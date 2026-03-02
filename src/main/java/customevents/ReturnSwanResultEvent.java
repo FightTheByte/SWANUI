@@ -1,15 +1,13 @@
 package customevents;
 
-public class FileResultEvent {
-
+public class ReturnSwanResultEvent {
     private String result;
 
-    public FileResultEvent(String result) {
+    ReturnSwanResultEvent(String result){
         this.result = result;
     }
 
-
-    public String returnResult() {
+    public String returnSwanResult(){
         return result;
     }
 }
