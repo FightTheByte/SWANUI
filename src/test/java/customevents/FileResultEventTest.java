@@ -1,5 +1,4 @@
 package customevents;
-import org.example.customevents.FileResultEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,7 +1,6 @@
 package customevents;
 
 
-import org.example.customevents.WriteToFileEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
