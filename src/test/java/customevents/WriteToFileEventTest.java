@@ -2,18 +2,17 @@ package customevents;
 
 
 import org.example.customevents.WriteToFileEvent;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class WriteToFileEventTest {
+class WriteToFileEventTest {
 
     WriteToFileEvent writeToFileEvent;
 
-    @Before
+    @BeforeEach
     public void instantiate(){
         writeToFileEvent = new WriteToFileEvent("this is a test");
     }

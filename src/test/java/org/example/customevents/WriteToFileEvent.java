@@ -3,10 +3,13 @@ package org.example.customevents;
 public class WriteToFileEvent {
 
 
-    public WriteToFileEvent(String thisIsATest) {
+    private String parameters;
+
+    public WriteToFileEvent(String parameters) {
+        this.parameters = parameters;
     }
 
     public String getParameters() {
-        return null;
+        return parameters;
     }
 }
