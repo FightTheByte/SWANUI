@@ -14,11 +14,11 @@ public class InputTokenTest {
 
     @Test
     void inputTokenHasTypeTest(){
-        type = inputToken.getType();
+        String type = inputToken.getType();
     }
 
     @Test
     void inputTokenHasNameTest(){
-        name = inputToken.getName();
+        String name = inputToken.getName();
     }
 }
