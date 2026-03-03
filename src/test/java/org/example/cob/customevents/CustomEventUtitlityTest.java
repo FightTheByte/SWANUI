@@ -1,4 +1,4 @@
-package customevents;
+package org.example.cob.customevents;
 
 import org.junit.jupiter.api.Test;
 

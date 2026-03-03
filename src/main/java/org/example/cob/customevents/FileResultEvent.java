@@ -1,4 +1,4 @@
-package customevents;
+package org.example.cob.customevents;
 
 public class FileResultEvent {
 

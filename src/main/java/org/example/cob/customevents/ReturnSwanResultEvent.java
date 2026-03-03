@@ -1,9 +1,9 @@
-package customevents;
+package org.example.cob.customevents;
 
 public class ReturnSwanResultEvent {
     private String result;
 
-    ReturnSwanResultEvent(String result){
+    public ReturnSwanResultEvent(String result){
         this.result = result;
     }
 
