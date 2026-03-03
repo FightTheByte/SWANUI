@@ -1,4 +1,4 @@
-package customevents;
+package org.example.cob.customevents;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class ReturnSwanResultEventTest {
     }
 
     @Test
-    void returnSwanResultEventTest(){
+    public void returnSwanResultEventTest(){
         assertEquals("result", returnSwanResultEvent.returnSwanResult(), "Did not return expected String result");
     }
 }

@@ -1,7 +1,7 @@
-package EventBus;
+package org.example.cob.eventbus;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.Subscribe;
-import customevents.CallSwanEvent;
+import org.example.cob.customevents.CallSwanEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ public class SwanEventBusTest {
 
     @Test
     void testSwanEventBus(){
-        SwanEventBus.returnEventBus().register(new Listener());
+        SwanEventBus.registerListener(new Listener());
         SwanEventBus.returnEventBus().post(new CallSwanEvent());
         assertTrue(eventsHandled == 1, "Event didn't fire");
     }
