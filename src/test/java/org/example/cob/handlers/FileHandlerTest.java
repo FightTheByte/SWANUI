@@ -3,14 +3,12 @@ package org.example.cob.handlers;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import org.example.cob.customevents.CallSwanEvent;
+import org.example.cob.handlers.FileHandler;
 import org.example.cob.customevents.FileResultEvent;
 import org.example.cob.customevents.WriteToFileEvent;
 import org.example.cob.eventbus.SwanEventBus;
-import org.example.cob.eventbus.SwanEventBusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.example.cob.handlers.FileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,6 +52,7 @@ public class FileHandlerTest {
 
     @Test
     void publishFileResultEvent(){
+        SwanEventBus.registerListener(this);
         fileHandler.fileResultEvent(new FileResultEvent("success"));
         assertTrue(eventsHandled == 1, "Event didn't fire");
     }
