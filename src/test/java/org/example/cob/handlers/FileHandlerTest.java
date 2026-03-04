@@ -1,7 +1,13 @@
 package org.example.cob.handlers;
 
+import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.CallSwanEvent;
+import org.example.cob.customevents.FileResultEvent;
 import org.example.cob.customevents.WriteToFileEvent;
+import org.example.cob.eventbus.SwanEventBus;
+import org.example.cob.eventbus.SwanEventBusTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.example.cob.handlers.FileHandler;
@@ -10,20 +16,27 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FileHandlerTest {
 
     FileHandler fileHandler;
     File file;
     EventBus eventBus;
+    int eventsHandled;
+
+    class Listener {
+        @Subscribe
+        public void handleDeadEvent(DeadEvent deadEvent) {
+            eventsHandled++;
+        }
+    }
 
     @BeforeEach
     public void instantiate() throws IOException {
         fileHandler = new FileHandler();
         eventBus = new EventBus();
+        eventsHandled = 0;
     }
 
     @Test
@@ -37,5 +50,11 @@ public class FileHandlerTest {
         } catch(FileNotFoundException e){
             fail(e);
         }
+    }
+
+    @Test
+    void publishFileResultEvent(){
+        fileHandler.fileResultEvent(new FileResultEvent("success"));
+        assertTrue(eventsHandled == 1, "Event didn't fire");
     }
 }
