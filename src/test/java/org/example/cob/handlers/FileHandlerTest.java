@@ -3,6 +3,7 @@ package org.example.cob.handlers;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.example.cob.eventbus.SwanEventBusTest;
 import org.example.cob.handlers.FileHandler;
 import org.example.cob.customevents.FileResultEvent;
 import org.example.cob.customevents.WriteToFileEvent;
@@ -52,8 +53,8 @@ public class FileHandlerTest {
 
     @Test
     void publishFileResultEvent(){
-        SwanEventBus.registerListener(this);
-        fileHandler.fileResultEvent(new FileResultEvent("success"));
+        SwanEventBus.registerListener(new Listener());
+        fileHandler.fileResultEvent("success");
         assertTrue(eventsHandled == 1, "Event didn't fire");
     }
 }
