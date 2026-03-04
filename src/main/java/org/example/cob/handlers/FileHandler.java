@@ -1,8 +1,9 @@
 package org.example.cob.handlers;
 
 import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.FileResultEvent;
 import org.example.cob.customevents.WriteToFileEvent;
-
+import org.example.cob.eventbus.SwanEventBus;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,7 +14,13 @@ public class FileHandler {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("parameters.dat"))){
             writer.write(writeToFileEvent.getParameters());
         } catch(IOException e){
-            System.out.println(e);
+            fileResultEvent("Failed to write parameters to file");
+            return;
         }
+        fileResultEvent("Successfully wrote parameters to file");
+    }
+
+    void fileResultEvent(String message){
+        SwanEventBus.returnEventBus().post(new FileResultEvent(message));
     }
 }
