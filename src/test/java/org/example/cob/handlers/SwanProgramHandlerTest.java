@@ -8,6 +8,8 @@ import org.example.cob.eventbus.SwanEventBus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.ExecutionException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SwanProgramHandlerTest {
@@ -17,7 +19,7 @@ public class SwanProgramHandlerTest {
 
     @BeforeEach
     public void initialise(){
-        swanProgramHandler = SwanProgramHandler.getInstance();
+        swanProgramHandler = SwanProgramHandler.getInstance(true);
         SwanEventBus.registerListener(new StringListener());
     }
 
@@ -27,9 +29,21 @@ public class SwanProgramHandlerTest {
     }
 
     @Test
-    void testRunSwan(){
-        swanProgramHandler.runSwan();
-        assertEquals("success", result, "swanProgramHandler did not emit and return correct String");
+    void testRunSwan() throws InterruptedException {
+        Thread test = new Thread(() -> {
+            try {
+                swanProgramHandler.runSwan();
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        test.start();
+        do {
+
+        }while(test.isAlive());
+        assertEquals("success", result.trim(), "swanProgramHandler did not emit and return correct String");
     }
 
 

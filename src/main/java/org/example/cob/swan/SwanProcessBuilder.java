@@ -12,7 +12,6 @@ public class SwanProcessBuilder {
             Process process = processBuilder.start();
             process.waitFor();
             String results = new String(process.getInputStream().readAllBytes());
-            System.out.println(results);
             return results;
         } catch(Exception e){
             return e.toString();

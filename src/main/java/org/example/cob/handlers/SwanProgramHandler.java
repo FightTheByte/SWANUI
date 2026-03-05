@@ -3,8 +3,10 @@ import org.example.cob.customevents.ReturnSwanResultEvent;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.swan.SwanAdapter;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public final class SwanProgramHandler{
@@ -13,19 +15,20 @@ public final class SwanProgramHandler{
     private static SwanProgramHandler INSTANCE;
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    private SwanProgramHandler(){
+    private SwanProgramHandler(boolean testing){
+        swanAdapter = new SwanAdapter(testing);
     }
 
-    public synchronized static SwanProgramHandler getInstance(){
+    public synchronized static SwanProgramHandler getInstance(boolean testing){
         if(INSTANCE == null){
-            INSTANCE = new SwanProgramHandler();
+            INSTANCE = new SwanProgramHandler(testing);
         }
         return INSTANCE;
     }
 
-    public void runSwan() {
 
-        executor.submit(() -> {
+    public void runSwan() throws ExecutionException, InterruptedException {
+        Future<String> future = executor.submit(() -> {
             String os = System.getProperty("os.name");
             if(os.startsWith("Windows")){
                 swanResult = swanAdapter.runSwanWithArgumentsWindows();
@@ -37,8 +40,12 @@ public final class SwanProgramHandler{
                 swanResult = swanAdapter.runSwanWithArgumentsLinux();
             }
 
-            swanResult(swanResult);
+            return swanResult;
         });
+
+        String result = future.get();
+        swanResult(result);
+        executor.shutdown();
     }
 
     private void swanResult(String result){
