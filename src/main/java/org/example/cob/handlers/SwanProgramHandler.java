@@ -2,7 +2,6 @@ package org.example.cob.handlers;
 import org.example.cob.customevents.ReturnSwanResultEvent;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.swan.SwanAdapter;
-import org.example.cob.swan.SwanAdapterTest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
