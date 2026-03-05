@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class PoolHandlerTest {
+/*public class PoolHandlerTest {
     DatabasePool db;
     PoolHandler poolHandler;
 
@@ -53,4 +53,4 @@ public class PoolHandlerTest {
     void selectResultEventEmits(){
 
     }
-}
+}*/

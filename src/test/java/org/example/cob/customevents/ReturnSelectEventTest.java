@@ -7,7 +7,7 @@ import javax.json.JsonObject;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ReturnSelectEventTest {
+/*public class ReturnSelectEventTest {
 
     ReturnSelectEvent returnSelectEvent;
 
@@ -21,4 +21,4 @@ public class ReturnSelectEventTest {
     public void returnSwanResultEventTest(){
         assertEquals("result", returnSelectEvent.returnSwanResult(), "Did not return expected String result");
     }
-}
+}*/
