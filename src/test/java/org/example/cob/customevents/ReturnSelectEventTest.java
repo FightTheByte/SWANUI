@@ -19,6 +19,6 @@ public class ReturnSelectEventTest {
 
     @Test
     public void returnSwanResultEventTest(){
-        assertEquals("result", returnSelectEvent.getSwanResult(), "Did not return expected String result");
+        assertEquals("result", returnSelectEvent.getSelectResult(), "Did not return expected String result");
     }
 }
