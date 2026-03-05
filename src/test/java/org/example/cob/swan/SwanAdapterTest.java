@@ -12,7 +12,7 @@ public class SwanAdapterTest {
 
     @BeforeEach
     public void instantiate(){
-        swanAdapter = new SwanAdapter();
+        swanAdapter = new SwanAdapter(true);
     }
 
     @Test
