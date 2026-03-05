@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class SwanProcessBuilderTest {
 
     SwanProcessBuilder swanProcessBuilder;
+    String[] arguments;
 
     @BeforeEach
     public void instantiate(){
@@ -19,10 +20,18 @@ public class SwanProcessBuilderTest {
 
     @Test
     void runModelTest(){
-        String[] commands = new String[]{"cmd.exe", "/C", "echo pass"};
+        if(System.getProperty("os.name").startsWith("Windows")) {
+            arguments = new String[]{"cmd", "/C", "echo success"};
+        }
+        else if(System.getProperty("os.name").startsWith("Mac")){
+            arguments = new String[]{"/bin/bash", "-c", "echo success"};
+        }
+        else{
+            arguments = new String[]{"/usr/bin/bash", "-c", "echo success"};
+        }
         try{
-            String results = swanProcessBuilder.runModel(commands);
-            assertEquals("pass", results.trim(), "SwanProcessBuilder did not run or return result");
+            String results = swanProcessBuilder.runModel(arguments);
+            assertEquals("success", results.trim(), "SwanProcessBuilder did not run or return result");
         } catch (RuntimeException e) {
             fail(e);
         }
