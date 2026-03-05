@@ -21,8 +21,8 @@ public class SwanProcessBuilderTest {
     void runModelTest(){
         String[] commands = new String[]{"cmd.exe", "/C", "echo pass"};
         try{
-            List<String> results = swanProcessBuilder.runSwan(commands);
-            assertEquals("pass", results.get(0), "SwanProcessBuilder did not run or return result");
+            String results = swanProcessBuilder.runModel(commands);
+            assertEquals("pass", results.trim(), "SwanProcessBuilder did not run or return result");
         } catch (RuntimeException e) {
             fail(e);
         }
