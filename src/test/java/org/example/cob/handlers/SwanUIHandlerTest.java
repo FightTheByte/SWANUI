@@ -59,13 +59,13 @@ public class SwanUIHandlerTest {
 
     @Test
     void insertIntoDbTest(){
-        swanUIHandler.insertToDB(new InsertEvent("test-name-ui", "test-param-ui"));
+        swanUIHandler.insertToDB("test-name-ui", "test-param-ui");
         assertNull(error);
     }
 
     @Test
     void insertIntoDbErrorTest(){
-        swanUIHandler.insertToDBError(new InsertEvent("1234567890123456789012345678901234567890123456789012345678901234567890", "test-param-ui"));
+        swanUIHandler.insertToDB("1234567890123456789012345678901234567890123456789012345678901234567890", "test-param-ui");
         assertTrue(Objects.equals(error, "Name too long"));
     }
 
