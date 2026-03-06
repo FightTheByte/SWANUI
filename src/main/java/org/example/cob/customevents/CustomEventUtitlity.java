@@ -11,8 +11,8 @@ public class CustomEventUtitlity {
         return new FileResultEvent(result);
     }
 
-    public static InsertEvent getInsertEvent(){
-        return new InsertEvent();
+    public static InsertEvent getInsertEvent(String name, String parameters){
+        return new InsertEvent(name, parameters);
     }
 
     public static SelectEvent getSelectEvent(){
