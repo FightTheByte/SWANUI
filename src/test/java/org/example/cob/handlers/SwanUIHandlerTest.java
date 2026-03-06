@@ -28,7 +28,10 @@ public class SwanUIHandlerTest {
         SwanEventBus.registerListener(poolHandler);
         SwanEventBus.registerListener(fileHandler);
         SwanEventBus.registerListener(swanProgramHandler);
-        SwanEventBus.registerListener(this);
+        SwanEventBus.registerListener(new Listener());
+        SwanEventBus.registerListener(new ErrorListener());
+        SwanEventBus.registerListener(new StringListener());
+        SwanEventBus.registerListener(new FileListener());
     }
 
     class Listener{
@@ -48,7 +51,10 @@ public class SwanUIHandlerTest {
 
     class StringListener {
         @Subscribe
-        public void resultEvent(ReturnSwanResultEvent results){result = results.returnSwanResult();}
+        public void resultEvent(ReturnSwanResultEvent results){
+            System.out.println(result);
+            result = results.returnSwanResult();
+        }
     }
 
     class FileListener {
@@ -77,7 +83,13 @@ public class SwanUIHandlerTest {
 
     @Test
     void runSwanTest(){
-        swanUIHandler.runSwan();
+        Thread thread = new Thread(() -> {
+            swanUIHandler.runSwan();
+        });
+        thread.start();
+        do{
+
+        }while (thread.isAlive());
         assertTrue(Objects.equals(result, "success"));
     }
 
