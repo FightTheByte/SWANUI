@@ -2,6 +2,7 @@ package org.example.cob.handlers;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.ErrorEvent;
 import org.example.cob.customevents.ReturnSelectEvent;
 import org.example.cob.database.DatabasePool;
 import org.example.cob.util.Parameter;
@@ -21,6 +22,7 @@ public class PoolHandlerTest {
     EventBus eventBus;
     String name;
     String params;
+    String error;
 
     @BeforeEach
     public void instantiate(){
@@ -33,7 +35,7 @@ public class PoolHandlerTest {
                 Statement stat = conn.createStatement();
         )
         {
-            stat.executeQuery("DROP * FROM parameters;");
+            stat.execute("DELETE FROM parameters WHERE 1=1;");
         }
         catch(SQLException e){
             System.out.println(e);
@@ -48,6 +50,13 @@ public class PoolHandlerTest {
         }
     }
 
+    class ErrorListener{
+        @Subscribe
+        void handleErrorEvent(ErrorEvent errorEvent){
+            error = errorEvent.getError();
+        }
+    }
+
     @Test
     void insertToDatabase(){
 
@@ -57,12 +66,7 @@ public class PoolHandlerTest {
                 Statement stat = conn.createStatement();
         )
         {
-            JsonObject json = Json.createObjectBuilder()
-                .add("name", "test-name")
-                .add("params", "test-params")
-                .build();
-            String insertVals = json.toString();
-            poolHandler.insert(insertVals);
+            poolHandler.insert("test-name","test-params");
             ResultSet results = stat.executeQuery("SELECT name, params FROM parameters;");
             Parameter parameter = new Parameter(results.getString("name"), results.getString("params"));
             assertEquals("test-name", parameter.getName(), "name not inserted into database");
