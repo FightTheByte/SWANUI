@@ -6,6 +6,8 @@ import org.example.cob.customevents.*;
 import org.example.cob.database.DatabasePool;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.util.Parameter;
+import org.junit.After;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,8 +26,8 @@ public class PoolHandlerTest {
     @BeforeEach
     public void instantiate(){
 
-        SwanEventBus.returnEventBus().register(new Listener());
-        SwanEventBus.returnEventBus().register(new ErrorListener());
+        SwanEventBus.registerListener(new Listener());
+        SwanEventBus.registerListener(new ErrorListener());
         db = new DatabasePool("test.db");
         poolHandler = new PoolHandler("test.db");
         try(
@@ -38,6 +40,12 @@ public class PoolHandlerTest {
         catch(SQLException e){
             System.out.println(e.toString());
         }
+    }
+
+    @AfterEach
+    public void unregisterListeners(){
+        SwanEventBus.returnEventBus().unregister(new Listener());
+        SwanEventBus.returnEventBus().unregister(new ErrorListener());
     }
 
     class Listener{
