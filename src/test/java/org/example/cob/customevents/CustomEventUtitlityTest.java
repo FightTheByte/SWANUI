@@ -18,7 +18,7 @@ public class CustomEventUtitlityTest {
 
     @Test
     void returnsInsertEventTest(){
-        assertTrue(CustomEventUtitlity.getInsertEvent() instanceof InsertEvent, "Didn't return InsertEvent Object");
+        assertTrue(CustomEventUtitlity.getInsertEvent("name", "parameters") instanceof InsertEvent, "Didn't return InsertEvent Object");
     }
 
     @Test
