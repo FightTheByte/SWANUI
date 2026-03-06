@@ -26,4 +26,8 @@ public class CustomEventUtitlity {
     public static ReturnSwanResultEvent getReturnSwanResultEvent(String result){
         return new ReturnSwanResultEvent(result);
     }
+
+    public static ErrorEvent getErrorEvent(String error){
+        return new ErrorEvent(error);
+    }
 }
