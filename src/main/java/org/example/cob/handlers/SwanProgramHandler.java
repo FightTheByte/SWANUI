@@ -17,7 +17,7 @@ public final class SwanProgramHandler{
     private static SwanProgramHandler INSTANCE;
     private final ExecutorService executor = Executors.newFixedThreadPool(10);
 
-    private SwanProgramHandler(boolean testing){
+    SwanProgramHandler(boolean testing){
         swanAdapter = new SwanAdapter(testing);
     }
 
