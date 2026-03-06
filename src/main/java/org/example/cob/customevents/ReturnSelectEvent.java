@@ -1,13 +1,17 @@
 package org.example.cob.customevents;
 
-public class ReturnSelectEvent {
-    String selectResult;
+import org.example.cob.util.Parameter;
 
-    public ReturnSelectEvent(String selectResult){
+import java.util.List;
+
+public class ReturnSelectEvent {
+    private List<Parameter> selectResult;
+
+    public ReturnSelectEvent(List<Parameter> selectResult){
         this.selectResult = selectResult;
     }
 
-    public String getSelectResult(){
+    public List<Parameter> getSelectResult(){
         return selectResult;
     }
 }
