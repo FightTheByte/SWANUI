@@ -15,7 +15,7 @@ public class DatabasePool {
             Connection conn = DriverManager.getConnection(database);
             Statement stat = conn.createStatement();
         ) {
-            stat.execute("CREATE TABLE IF NOT EXISTS parameters (id INTEGER PRIMARY KEY AUTOINCREMENT , name VARCHAR(250) NOT NULL, params TEXT NOT NULL);");
+            stat.execute("CREATE TABLE IF NOT EXISTS parameters (id INTEGER PRIMARY KEY AUTOINCREMENT , name VARCHAR(60) NOT NULL, params TEXT NOT NULL);");
         }
         catch (SQLException e) {
             throw new RuntimeException(e);
