@@ -52,7 +52,6 @@ public class SwanUIHandlerTest {
     class StringListener {
         @Subscribe
         public void resultEvent(ReturnSwanResultEvent results){
-            System.out.println(result);
             result = results.returnSwanResult();
         }
     }
@@ -82,14 +81,14 @@ public class SwanUIHandlerTest {
     }
 
     @Test
-    void runSwanTest(){
+    void runSwanTest() throws InterruptedException {
         Thread thread = new Thread(() -> {
             swanUIHandler.runSwan();
         });
         thread.start();
         do{
 
-        }while (thread.isAlive());
+        }while (fileResult == null);
         assertTrue(Objects.equals(result, "success"));
     }
 
