@@ -42,11 +42,6 @@ public class PoolHandlerTest {
         }
     }
 
-    @AfterEach
-    public void unregisterListeners(){
-        SwanEventBus.returnEventBus().unregister(new Listener());
-        SwanEventBus.returnEventBus().unregister(new ErrorListener());
-    }
 
     class Listener{
         @Subscribe

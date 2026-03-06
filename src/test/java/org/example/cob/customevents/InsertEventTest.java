@@ -11,7 +11,7 @@ public class InsertEventTest {
 
     @BeforeEach
     public void instantiate(){
-        insertEvent = new InsertEvent();
+        insertEvent = new InsertEvent("name", "parameters");
     }
 
     @Test
