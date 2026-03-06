@@ -2,6 +2,7 @@ package org.example.cob.handlers;
 
 
 import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.CallSwanEvent;
 import org.example.cob.customevents.ReturnSwanResultEvent;
 import org.example.cob.eventbus.SwanEventBus;
 
@@ -32,7 +33,7 @@ public class SwanProgramHandlerTest {
     void testRunSwan() throws InterruptedException {
         Thread test = new Thread(() -> {
             try {
-                swanProgramHandler.runSwan();
+                swanProgramHandler.runSwan(new CallSwanEvent());
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {

@@ -1,4 +1,6 @@
 package org.example.cob.handlers;
+import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.CallSwanEvent;
 import org.example.cob.customevents.ReturnSwanResultEvent;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.swan.SwanAdapter;
@@ -26,8 +28,8 @@ public final class SwanProgramHandler{
         return INSTANCE;
     }
 
-
-    public void runSwan() throws ExecutionException, InterruptedException {
+    @Subscribe
+    public void runSwan(CallSwanEvent callSwanEvent) throws ExecutionException, InterruptedException {
         Future<String> future = executor.submit(() -> {
             String os = System.getProperty("os.name");
             if(os.startsWith("Windows")){

@@ -1,9 +1,7 @@
 package org.example.cob.handlers;
 
-import org.example.cob.customevents.CustomEventUtitlity;
-import org.example.cob.customevents.ErrorEvent;
-import org.example.cob.customevents.ReturnSelectEvent;
-import org.example.cob.customevents.ReturnSwanResultEvent;
+import com.google.common.eventbus.Subscribe;
+import org.example.cob.customevents.*;
 import org.example.cob.database.DatabasePool;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.util.Parameter;
@@ -21,7 +19,11 @@ public class PoolHandler {
         db = new DatabasePool(database);
     }
 
-    public void insert(String name, String parameters) {
+    @Subscribe
+    public void insert(InsertEvent insertEvent) {
+        String name = insertEvent.getName();
+        String parameters = insertEvent.getParameters();
+
         if(name.length() < 61) {
             String query = "INSERT INTO parameters (name, params) VALUES (?,?);";
             try (
@@ -41,7 +43,8 @@ public class PoolHandler {
         }
     }
 
-    public void select() {
+    @Subscribe
+    public void select(SelectEvent selectEvent) {
         parameters = new ArrayList<>();
         try(
             Connection conn = db.connection();
