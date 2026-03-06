@@ -2,9 +2,7 @@ package org.example.cob.handlers;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import org.example.cob.customevents.ErrorEvent;
-import org.example.cob.customevents.ReturnSelectEvent;
-import org.example.cob.customevents.ReturnSwanResultEvent;
+import org.example.cob.customevents.*;
 import org.example.cob.database.DatabasePool;
 import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.util.Parameter;
@@ -66,7 +64,7 @@ public class PoolHandlerTest {
                 Statement stat = conn.createStatement();
         )
         {
-            poolHandler.insert("test-name","test-params");
+            poolHandler.insert(new InsertEvent("test-name","test-params"));
             ResultSet results = stat.executeQuery("SELECT name, params FROM parameters;");
             Parameter parameter = new Parameter(results.getString("name"), results.getString("params"));
             assertEquals("test-name", parameter.getName(), "name not inserted into database");
@@ -84,7 +82,7 @@ public class PoolHandlerTest {
                 Statement stat = conn.createStatement();
         )
         {
-            poolHandler.insert("t-nametest-nametest-namenametest-nametest-nametest-nametnametest-nam","test-params");
+            poolHandler.insert(new InsertEvent("t-nametest-nametest-namenametest-nametest-nametest-nametnametest-nam","test-params"));
             ResultSet results = stat.executeQuery("SELECT name, params FROM parameters;");
 
             assertNotNull(error);
@@ -102,7 +100,7 @@ public class PoolHandlerTest {
         )
         {
             stat.execute("INSERT INTO parameters (name, params) VALUES ('test-name', 'test-params');");
-            poolHandler.select();
+            poolHandler.select(new SelectEvent());
             assertEquals("test-name", name, "name not selected from database");
             assertEquals("test-params", params, "params not selected from database");
 
