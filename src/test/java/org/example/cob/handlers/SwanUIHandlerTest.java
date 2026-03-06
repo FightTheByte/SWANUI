@@ -5,7 +5,12 @@ import org.example.cob.customevents.*;
 import org.example.cob.eventbus.SwanEventBus;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.UnaryOperator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,7 +18,7 @@ public class SwanUIHandlerTest {
     String name;
     String params;
     String error;
-    String result;
+    AtomicReference<String> result = new AtomicReference<>();
     String fileResult;
     SwanUIHandler swanUIHandler;
     SwanProgramHandler swanProgramHandler;
@@ -52,7 +57,8 @@ public class SwanUIHandlerTest {
     class StringListener {
         @Subscribe
         public void resultEvent(ReturnSwanResultEvent results){
-            result = results.returnSwanResult();
+            result.set(results.returnSwanResult());
+            System.out.println(result.toString());
         }
     }
 
@@ -86,10 +92,8 @@ public class SwanUIHandlerTest {
             swanUIHandler.runSwan();
         });
         thread.start();
-        do{
-
-        }while (fileResult == null);
-        assertTrue(Objects.equals(result, "success"));
+        thread.join();
+        assertTrue(Objects.equals(result.toString().trim(), "success"));
     }
 
     @Test
