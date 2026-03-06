@@ -2,7 +2,7 @@ package org.example.cob.customevents;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import org.example.cob.customevents.ErrorEvent;
 
 import java.util.Objects;
 
