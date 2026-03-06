@@ -6,6 +6,7 @@ import org.example.cob.customevents.CallSwanEvent;
 import org.example.cob.customevents.ReturnSwanResultEvent;
 import org.example.cob.eventbus.SwanEventBus;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +23,11 @@ public class SwanProgramHandlerTest {
     public void initialise(){
         swanProgramHandler = SwanProgramHandler.getInstance(true);
         SwanEventBus.registerListener(new StringListener());
+    }
+
+    @AfterEach
+    public void unregisterListeners(){
+        SwanEventBus.returnEventBus().unregister(new StringListener());
     }
 
     class StringListener {
