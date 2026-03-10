@@ -71,7 +71,7 @@ public class SwanUIHandlerTest {
     @Test
     void insertIntoDbTest(){
         swanUIHandler.insertToDB("test-name-ui", "test-param-ui");
-        assertNull(error);
+        assertNull(false);
     }
 
     @Test
