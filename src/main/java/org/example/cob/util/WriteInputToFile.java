@@ -14,8 +14,11 @@ public class WriteInputToFile {
             "MODE",
             "COORDinates",
             "CGRID",
-            "READGRID",
-            "INPGRID",
+            "FREe",
+            "UNFormatted",
+            "FORmat",
+            "READgrid",
+            "INPgrid",
             "READinp",
             "BOUNd",
             "BOUNdspec",
@@ -31,9 +34,9 @@ public class WriteInputToFile {
             "OUTPut",
             "NUMeric",
             "QUANTity",
-            "BLOCK",
-            "POINTS",
-            "TABLE",
+            "BLOck",
+            "POINts",
+            "TABle",
             "SPECout",
             "COMPute",
             "HOTFILE",
@@ -50,40 +53,79 @@ public class WriteInputToFile {
             for (Field<?> field : form.getFields()) {
                 if (field instanceof DataField<?, ?, ?> dataField) {
                     String value = dataField.getValue().toString();
+                    String checkWord;
+                    if(value.startsWith("[")){
+                        checkWord = value.substring(1, value.length() - 1).replaceAll(", ", " ").split(" ")[0];
+
+                    } else {
+                        checkWord = value.split(" ")[0];
+                    }
                     for(String keyword : keywords){
-                        if(keyword.equals(value)){
+                        if(keyword.equals(checkWord)){
+                            if(value.startsWith("[")){
+                                value = value.substring(1, value.length() - 1).replaceAll(", ", "\n");
+                            }
                             writer.append("\n").append(value);
                             foundWord = true;
                             break;
                         }
                     }
                     if(!foundWord) {
+                        if(value.startsWith("[")){
+                            value = value.substring(1, value.length() - 1).replaceAll(", ", " ");
+                        }
                         writer.append(" ").append(value);
                     }
                     foundWord = false;
                 } else if (field instanceof MultiSelectionField<?> multiSelectionField) {
                     String value = multiSelectionField.getSelection().toString();
+                    String checkWord;
+                    if(value.startsWith("[")){
+                        checkWord = value.substring(1, value.length() - 1).replaceAll(", ", " ").split(" ")[0];
+
+                    } else {
+                        checkWord = value.split(" ")[0];
+                    }
                     for(String keyword : keywords){
-                        if(keyword.equals(value)){
+                        if(keyword.equals(checkWord)){
+                            if(value.startsWith("[")){
+                                value = value.substring(1, value.length() - 1).replaceAll(", ", "\n");
+                            }
                             writer.append("\n").append(value);
                             foundWord = true;
                             break;
                         }
                     }
                     if(!foundWord) {
+                        if(value.startsWith("[")){
+                            value = value.substring(1, value.length() - 1).replaceAll(", ", " ");
+                        }
                         writer.append(" ").append(value);
                     }
                     foundWord = false;
                 } else if (field instanceof SingleSelectionField<?> singleSelectionField) {
                     String value = singleSelectionField.getSelection().toString();
+                    String checkWord;
+                    if(value.startsWith("[")){
+                        checkWord = value.substring(1, value.length() - 1).replaceAll(", ", " ").split(" ")[0];
+
+                    } else {
+                        checkWord = value.split(" ")[0];
+                    }
                     for(String keyword : keywords){
-                        if(keyword.equals(value)){
+                        if(keyword.equals(checkWord)){
+                            if(value.startsWith("[")){
+                                value = value.substring(1, value.length() - 1).replaceAll(", ", "\n");
+                            }
                             writer.append("\n").append(value);
                             foundWord = true;
                             break;
                         }
                     }
                     if(!foundWord) {
+                        if(value.startsWith("[")){
+                            value = value.substring(1, value.length() - 1).replaceAll(", ", " ");
+                        }
                         writer.append(" ").append(value);
                     }
                     foundWord = false;
