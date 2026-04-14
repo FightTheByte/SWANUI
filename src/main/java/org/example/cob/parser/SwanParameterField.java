@@ -12,7 +12,7 @@ public class SwanParameterField {
     private final String csv;
     private final List<List<List<List<InputToken>>>> inputTokens = new ArrayList<>();
 
-    SwanParameterField(String csv){
+    public SwanParameterField(String csv){
         this.csv = csv;
     }
 
@@ -143,7 +143,7 @@ public class SwanParameterField {
             }
         }
         catch(Exception e){
-            System.out.println(e);
+            System.out.println("error creating sections");
         }
     }
 
