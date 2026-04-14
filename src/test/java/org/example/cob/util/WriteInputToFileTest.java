@@ -1,7 +1,7 @@
 package org.example.cob.util;
 
 import com.dlsc.formsfx.model.structure.*;
-import org.example.cob.customevents.WriteToFileEvent;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
