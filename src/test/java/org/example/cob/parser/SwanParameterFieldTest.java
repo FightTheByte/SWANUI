@@ -18,7 +18,7 @@ public class SwanParameterFieldTest {
 
     @Test
     void isInstantiated(){
-        assertTrue(swanParameterField instanceof SwanParameterField);
+        assertTrue(swanParameterField != null);
     }
 
     @Test
@@ -32,6 +32,7 @@ public class SwanParameterFieldTest {
 
     @Test
     void getInputTokensTest(){
+        swanParameterField.createInputTokens();
         List<List<List<List<InputToken>>>> inputTokens = swanParameterField.getInputTokens();
         InputToken inputToken = inputTokens.getFirst().getFirst().getFirst().getFirst();
         int max = inputToken.getMax();
