@@ -48,17 +48,17 @@ public class WriteInputToFileTest {
     @Test
     void fileContainsThreeRowsTest(){
         try{
-            WriteToFileEvent.writeToFile(form);
+            WriteInputToFile.writeToFile(form);
             File inputFile = new File("inputFile.swn");
             try(
                     Scanner scanner = new Scanner(inputFile);
             ){
                 int i = 0;
-                while(scanner.hasNext()){
-                    i = i++;
-                    scanner.next();
+                while(scanner.hasNextLine()){
+                    i++;
+                    scanner.nextLine();
                 }
-                assertEquals(3, i);
+                assertEquals(4, i);
             }
         } catch(Exception e){
             fail();
