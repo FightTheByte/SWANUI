@@ -22,17 +22,17 @@ public class InputToken {
         this.max = max;
     }
 
-    String getName(){
+    public String getName(){
         return name;
     }
 
-    String getType(){
+    public String getType(){
         return type;
     }
 
-    String getLabel(){return label;}
+    public String getLabel(){return label;}
 
-    int getMin(){return min;}
+    public int getMin(){return min;}
 
-    int getMax(){return max;}
+    public int getMax(){return max;}
 }
