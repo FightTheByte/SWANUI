@@ -1,1 +1,2 @@
-START,label,name,MAX,1,MIN,0,INT,NEXT,EOF
+START,label,name,MAX,1,MIN,0,INT,NEXT,SEG
+label,name,MAX,3,MIN,2,INT,NEXT,EOF
