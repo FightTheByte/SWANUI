@@ -31,7 +31,7 @@ public class DatabasePoolTest {
             stat.execute("INSERT INTO parameters (name, params) VALUES ('test', 'test');");
             ResultSet rs = stat.executeQuery("select name from parameters;");
             String result = rs.getString("name");
-            assertTrue(Objects.equals(result, "test"));
+            assertEquals("test", result);
         } catch (SQLException e) {
             fail(e);
         }
