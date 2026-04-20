@@ -14,7 +14,7 @@ public class SwanAdapter {
     public String runSwanWithArgumentsWindows() {
         arguments = (testFlag)
                 ?new String[]{"cmd", "/C", "echo success"}
-                :new String[]{"cmd", "/C", "swanrun parameters.swn"};
+                :new String[]{"cmd", "/C", "swanrun inputFile"};
 
         results = swanProcessBuilder.runModel(arguments);
         return results;
@@ -23,7 +23,7 @@ public class SwanAdapter {
     public String runSwanWithArgumentsMac() {
         arguments = (testFlag)
                 ?new String[]{"/bin/bash", "-c", "echo success"}
-                :new String[]{"/bin/bash", "-c", "swanrun parameters.swn"};
+                :new String[]{"/bin/bash", "-c", "swanrun inputFile"};
         results = swanProcessBuilder.runModel(arguments);
         return results;
     }
@@ -31,7 +31,7 @@ public class SwanAdapter {
     public String runSwanWithArgumentsLinux() {
         arguments = (testFlag)
                 ?new String[]{"/usr/bin/bash", "-c", "echo success"}
-                :new String[]{"/usr/bin/bash", "-c", "swanrun parameters.swn"};
+                :new String[]{"/usr/bin/bash", "-c", "swanrun inputFile"};
         results = swanProcessBuilder.runModel(arguments);
         return results;
     }

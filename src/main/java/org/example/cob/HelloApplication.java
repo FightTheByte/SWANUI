@@ -2,8 +2,9 @@ package org.example.cob;
 
 import com.dlsc.formsfx.model.structure.*;
 import com.dlsc.formsfx.view.renderer.FormRenderer;
+import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.cob.UI.FormGenerator;
+import org.example.cob.customevents.CustomEventUtitlity;
+import org.example.cob.customevents.ReturnSwanResultEvent;
+import org.example.cob.eventbus.SwanEventBus;
 import org.example.cob.util.WriteInputToFile;
 
 import java.io.IOException;
@@ -25,7 +29,7 @@ import java.util.Objects;
 public class HelloApplication extends Application {
 
     Button run = new Button("Run");
-
+    TextArea console = new TextArea();
     ScrollPane sp = new ScrollPane();
 
     FormGenerator formGenerator = new FormGenerator("src/main/resources/swan.csv");
@@ -44,9 +48,15 @@ public class HelloApplication extends Application {
             "Lock-up"
     };
 
+    @Subscribe
+    void updateConsole(ReturnSwanResultEvent result){
+        String previousText = console.getText();
+        console.setText(previousText + "\n" + result.returnSwanResult());
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
-
+        SwanEventBus.registerListener(this);
         sections = formGenerator.getSections();
         final int[] i = {0};
         sections.forEach(section ->{
@@ -71,7 +81,7 @@ public class HelloApplication extends Application {
         controls.setPadding(new Insets(10,10,10,10));
 
         run.setId("custom-button");
-        TextArea console = new TextArea();
+
         VBox runBox = new VBox(10);
 
         console.setEditable(false);
@@ -93,10 +103,12 @@ public class HelloApplication extends Application {
                 }
                 String previousText = console.getText();
                 console.setText(previousText + "\n" + "Running SWAN...");
+                SwanEventBus.returnEventBus().post(CustomEventUtitlity.getCallSwanEvent());
             } else {
                 String previousText = console.getText();
                 console.setText(previousText + "\n" + "Input is invalid, please check for missing inputs");
             }
+
         });
 
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

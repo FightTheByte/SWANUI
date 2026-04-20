@@ -15,7 +15,7 @@ public final class SwanProgramHandler{
     String swanResult;
     SwanAdapter swanAdapter;
     private static SwanProgramHandler INSTANCE;
-    private final ExecutorService executor = Executors.newFixedThreadPool(10);
+    private final ExecutorService executor = Executors.newFixedThreadPool(1);
 
     SwanProgramHandler(boolean testing){
         swanAdapter = new SwanAdapter(testing);
@@ -47,7 +47,6 @@ public final class SwanProgramHandler{
 
         String result = future.get();
         swanResult(result);
-        executor.shutdown();
     }
 
     private void swanResult(String result){
