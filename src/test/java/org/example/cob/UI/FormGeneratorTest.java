@@ -13,7 +13,7 @@ public class FormGeneratorTest {
 
     @BeforeEach
     public void instantiate(){
-        this.formGenerator = new FormGenerator("src/main/resources/swan-test.csv");
+        this.formGenerator = new FormGenerator("/swan-test.csv");
     }
 
     @Test
