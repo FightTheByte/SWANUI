@@ -32,7 +32,7 @@ public class HelloApplication extends Application {
     TextArea console = new TextArea();
     ScrollPane sp = new ScrollPane();
 
-    FormGenerator formGenerator = new FormGenerator("src/main/resources/swan.csv");
+    FormGenerator formGenerator = new FormGenerator("/swan.csv");
 
     List<Section> sections;
 
@@ -92,7 +92,7 @@ public class HelloApplication extends Application {
         controls.getChildren().addAll(run);
         runBox.getChildren().addAll(controls, console);
         runBox.setAlignment(Pos.CENTER);
-
+        console.setText("Welcome to COB");
         run.setOnAction(event -> {
             if(form.isValid()) {
                 try {
