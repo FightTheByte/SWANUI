@@ -1,6 +1,9 @@
 package org.example.cob.parser;
 
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,8 +37,9 @@ public class SwanParameterField {
         int minConstraint = 0;
 
         try(
-                FileReader fileReader = new FileReader(csv);
-                CSVReader csvReader = new CSVReaderBuilder(fileReader).build();
+                InputStream inputStream = SwanParameterField.class.getResourceAsStream(csv);
+                InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                CSVReader csvReader = new CSVReaderBuilder(reader).build();
         )
         {
 
