@@ -13,7 +13,7 @@ public class SwanParameterFieldTest {
 
     @BeforeEach
     public void instantiate(){
-        this.swanParameterField = new SwanParameterField("src/main/resources/swan-test.csv");
+        this.swanParameterField = new SwanParameterField("/swan-test.csv");
     }
 
     @Test
